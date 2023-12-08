@@ -1,0 +1,2 @@
+- supprimer les .class
+- ajouter sur l'affichage, le nom du dernier arrêt (terminus) pour chaque trajets
