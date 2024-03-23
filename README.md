@@ -17,18 +17,22 @@ Vous pourrez connaitre les heures disponibles entre deux arrets, il est possible
 
 ### 2. Compiler
 
-Dans un terminal au repertoire ``./HoraireTransport/`` :
+Dans un terminal linux ou windows :
 
-* sur linux ou cmd windows : ``javac @compile.list @option.list``
-* sinon ``javac .\transport\ihm\*.java .\transport\metier\filtres\*.java .\transport\metier\*.java .\transport\Controleur.java -d class\``
+1. Aller au repertoire : ``./HoraireTransport/``
+2. Compiler le projet : ``javac "@compile.list" "@option.list"``
+
+	(ou ``javac .\transport\ihm\*.java .\transport\metier\filtres\*.java .\transport\metier\*.java .\transport\Controleur.java -d class\``)
 
 ### 3. Exécuter
 
 Dans un terminal au repertoire ``./HoraireTransport/class/`` :
 
-``java transport.Controleur;``
+``java transport.Controleur``
 
 ### 4. Utilisation
+
+![lancement](doc/images/lancement.png)
 
 1. Choisir un des fichiers pour les horaires dans la barre en haut.
 2. Selectionner un lieu de départ
