@@ -1,3 +1,0 @@
-- ajouter sur l'affichage, le nom du dernier arrêt (terminus) pour chaque trajets
-- ajouter un fichier xml pour la configuration des arrêts (liens entres les arrêts, aller-retour...)
-- ajouter la version android

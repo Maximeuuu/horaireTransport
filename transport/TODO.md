@@ -35,6 +35,7 @@ Liste des choses à ajouter, modifier ou supprimer dans le projet.
 ### Clarification saisies IHM
 - "*" devant les champs obligatoires (mettre en rouge etc)
 - encadrer en rouge la case lors d'une mauvaise saisie
+- ajouter sur l'affichage, le nom du dernier arrêt (terminus) pour chaque trajets
 
 ### Réparer la structure MVC (surtout sur la partie fichier et sauvegarde)
 - passer par le controleur et une classe de métier
@@ -66,6 +67,7 @@ Liste des choses à ajouter, modifier ou supprimer dans le projet.
 - tester si le transport passe par une ville particulière
 - "Ville : ___________"
 - test si tab.contient( txtVille.getText() )
+- ajouter un fichier xml pour la configuration des arrêts (liens entres les arrêts, aller-retour...)
 
 ### Partie affichage
 - logo : bandeau en haut + icone -> Anais
