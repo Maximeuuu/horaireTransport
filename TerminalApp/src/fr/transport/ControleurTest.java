@@ -1,57 +1,23 @@
 package fr.transport;
 
-import fr.transport.modele.entite.*;
-import fr.transport.vue.Terminal;
-
 import java.io.File;
+import java.util.List;
+import java.util.Map;
 
-public class Controleur
+import fr.transport.modele.entite.*;
+import fr.transport.modele.importation.LectureCSV;
+import fr.transport.modele.outils.UtilitaireRechercheTrajet;
+
+public class ControleurTest
 {
-	private static final String REPERTOIRE = "data";
 	public static void main( String[] args )
 	{
-		new Controleur();
+		new ControleurTest();
 	}
 
-	public Controleur()
+	public ControleurTest()
 	{
-		new Terminal( this );
-	}
-
-	public File[] getFichiersData()
-	{
-		File dir = new File( REPERTOIRE );
-		return dir.listFiles();
-	}
-
-	public int demanderChoix()
-	{
-		return Integer.parseInt( System.console().readLine() );
-	}
-
-	public String demanderChoixChaine()
-	{
-		return System.console().readLine();
-	}
-
-	public void appliquerFiltres()
-	{
-		// TODO
-	}
-
-	public LigneTransport getLigneTransport()
-	{
-		// TODO
-		return null;
-	}
-
-	public void filtrer( String nomFiltre, Object... valeurs )
-	{
-		// TODO
-	}
-
-	/*
-	 * String fileName = "data/ligne20_le-havre_caudebec-en-caux.csv";
+		String fileName = "data/ligne20_caudebec-en-caux_le-havre.csv";
 
 		File fichier = new File( fileName );
 
@@ -65,12 +31,12 @@ public class Controleur
 		RechercheTrajet recherche = new RechercheTrajet( arretDepart, arretDestination );
 		recherche.setJour( Jour.LUNDI );
 		recherche.setPeriode( Periode.TA );
-		recherche.addArretPassage( ligne.getEnsArretOrdonne().get( 19 ) );
+		//recherche.addArretPassage( ligne.getEnsArretOrdonne().get( 19 ) );
 		recherche.filtrer(ligne);
 
 		Map<Lieu, List<Heure>> mapHeuresArrets = UtilitaireRechercheTrajet.getEnsembleHeuresParArrets( ligne, recherche );
 		
 		System.out.println( UtilitaireRechercheTrajet.periodeEtJourToString( recherche ) );
 		System.out.println( UtilitaireRechercheTrajet.heuresParArretsToString( mapHeuresArrets ) );
-	 */
+	}
 }
