@@ -6,11 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Trajet implements Serializable
+public class Trajet implements Serializable, Cloneable
 {
 	private List<Jour> ensJour;
 	private List<Periode> ensPeriode;
 	private Map<Lieu, Heure> mapArrets;
+
+	/* CONSTRUCTEUR */
 
 	public Trajet( )
 	{
@@ -18,6 +20,15 @@ public class Trajet implements Serializable
 		this.ensPeriode = new ArrayList<Periode>();
 		this.mapArrets = new HashMap<Lieu, Heure>();
 	}
+
+	/* ACCESSEUR */
+
+	public Heure getHeureArret( Lieu lieu )
+	{
+		return mapArrets.get( lieu );
+	}
+
+	/* MODIFIEURS */
 
 	public void addJour( Jour jour )
 	{
@@ -34,9 +45,11 @@ public class Trajet implements Serializable
 		mapArrets.put( arret, heure );
 	}
 
-	public boolean passeParArret( Lieu arret )
+	/* TESTEURS */
+
+	public boolean pendantJour( Jour jour )
 	{
-		return mapArrets.containsKey( arret );
+		return ensJour.contains( jour );
 	}
 
 	public boolean pendantPeriode( Periode periode )
@@ -44,9 +57,9 @@ public class Trajet implements Serializable
 		return ensPeriode.contains( periode ) || ensPeriode.contains( Periode.TA );
 	}
 
-	public boolean pendantJour( Jour jour )
+	public boolean passeParArret( Lieu arret )
 	{
-		return ensJour.contains( jour );
+		return mapArrets.containsKey( arret );
 	}
 
 	public boolean arretPendantIntervalle( Lieu lieu, IntervalleHeure intervalleHeure )
@@ -59,6 +72,8 @@ public class Trajet implements Serializable
 		Heure heure = mapArrets.get( lieu );
 		return intervalleHeure.contient( heure );
 	}
+
+	/* METHODES */
 
 	@Override
 	public String toString( )
@@ -86,11 +101,6 @@ public class Trajet implements Serializable
 		return sb.toString( );
 	}
 
-	public Heure getHeureArret( Lieu lieu )
-	{
-		return mapArrets.get( lieu );
-	}
-
 	@Override
 	public boolean equals( Object obj )
 	{
@@ -101,5 +111,28 @@ public class Trajet implements Serializable
 		}
 
 		return false;
+	}
+
+	@Override
+	public Trajet clone( )
+	{
+		Trajet clone = new Trajet( );
+
+		for( Jour jour : ensJour )
+		{
+			clone.addJour( jour );
+		}
+
+		for( Periode periode : ensPeriode )
+		{
+			clone.addPeriode( periode );
+		}
+
+		for( Lieu arret : mapArrets.keySet( ) )
+		{
+			clone.addArret( arret, mapArrets.get( arret ) );
+		}
+
+		return clone;
 	}
 }

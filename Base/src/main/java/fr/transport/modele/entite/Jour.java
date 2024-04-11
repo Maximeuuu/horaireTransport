@@ -2,7 +2,8 @@ package fr.transport.modele.entite;
 
 public enum Jour
 {
-	LUNDI		( 1, "Lundi" ),	
+	GENERAL		( 9, "Jour" ),
+	LUNDI		( 1, "Lundi" ),
 	MARDI		( 2, "Mardi" ),
 	MERCREDI	( 3, "Mercredi" ),
 	JEUDI		( 4, "Jeudi" ),
@@ -13,6 +14,8 @@ public enum Jour
 
 	private int indice;
 	private String nom;
+
+	/* FACTORY */
 
 	public static Jour getJour( int indice )
 	{
@@ -26,11 +29,15 @@ public enum Jour
 		return null;
 	}
 
+	/* CONSTRUCTEUR */
+
 	private Jour( int indice, String nom )
 	{
 		this.indice = indice;
 		this.nom = nom;
 	}
+
+	/* ACCESSEURS */
 
 	public int getIndice()
 	{
@@ -41,6 +48,8 @@ public enum Jour
 	{
 		return this.nom;
 	}
+
+	/* METHODE */
 
 	@Override
 	public String toString()

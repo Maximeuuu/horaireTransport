@@ -10,6 +10,8 @@ public enum Periode
 	private String code;
 	private String nom;
 
+	/* FACTORY */
+
 	public static Periode getPeriode( String code )
 	{
 		for( Periode periode : Periode.values() )
@@ -22,11 +24,15 @@ public enum Periode
 		return null;
 	}
 
+	/* CONSTRUCTEUR */
+
 	private Periode( String code, String nom )
 	{
 		this.code = code;
 		this.nom = nom;
 	}
+
+	/* ACCESSEURS */
 
 	public String getCode()
 	{
@@ -37,6 +43,8 @@ public enum Periode
 	{
 		return this.nom;
 	}
+
+	/* METHODE */
 
 	@Override
 	public String toString()

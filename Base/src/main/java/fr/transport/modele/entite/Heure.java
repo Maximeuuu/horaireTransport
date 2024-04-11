@@ -10,6 +10,8 @@ public class Heure implements Comparable<Heure>, Serializable
 	public static final Heure MAX = new Heure( 23, 59 );
 	public static final Heure MIN = new Heure( 0, 0 );
 
+	/* CONSTRUCTEURS */
+
 	public Heure( int heure, int minute )
 	{
 		this.heure = heure;
@@ -23,6 +25,8 @@ public class Heure implements Comparable<Heure>, Serializable
 		this.minute = Integer.parseInt( tab[1] );
 	}
 
+	/* ACCESSEURS */
+
 	public int getHeure()
 	{
 		return heure;
@@ -32,6 +36,8 @@ public class Heure implements Comparable<Heure>, Serializable
 	{
 		return minute;
 	}
+
+	/* METHODES */
 
 	@Override
 	public String toString()

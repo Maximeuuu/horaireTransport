@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
 
-public class LigneTransport implements Serializable
+public class LigneTransport implements Serializable, Cloneable
 {
 	private String identifiant;
 	private String nom;
@@ -27,7 +27,7 @@ public class LigneTransport implements Serializable
 		this.ligneInverse = null;
 	}
 
-	/* GETTEURS */
+	/* ACCESSEURS */
 
 	public String getIdentifiant()
 	{
@@ -54,7 +54,7 @@ public class LigneTransport implements Serializable
 		return this.ligneInverse;
 	}
 
-	/* SETTEURS */
+	/* MODIFIEURS */
 
 	public void addArret( Lieu arret )
 	{
@@ -88,5 +88,21 @@ public class LigneTransport implements Serializable
 			sb.append( trajet.toString() + "\n\n" );
 		
 		return sb.toString();
+	}
+
+	@Override
+	public LigneTransport clone()
+	{
+		LigneTransport clone = new LigneTransport( this.identifiant, this.nom );
+
+		for( Lieu arret : ensArretOrdonne )
+			clone.addArret( arret.clone() );
+
+		for( Trajet trajet : ensTrajet )
+			clone.addTrajet( trajet.clone() );
+
+		clone.setLigneInverse( this.ligneInverse );
+
+		return clone;
 	}
 }
