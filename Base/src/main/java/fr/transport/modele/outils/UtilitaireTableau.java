@@ -4,9 +4,7 @@ import java.util.List;
 
 public class UtilitaireTableau
 {
-	private UtilitaireTableau( )
-	{
-	}
+	private UtilitaireTableau( ) {}
 
 	public static String[][] convertirListeEnTableau( List<String[]> lstDonnees )
 	{
