@@ -58,26 +58,21 @@ public class Controleur
 		File fichier = new File( fileName );
 
 		LectureCSV lecture = new LectureCSV( fichier );
-		LigneTransport ligneTransport = lecture.getLigneTransport();
+		
+		LigneTransport ligne = lecture.getLigneTransport();
 
+		Lieu arretDepart = ligne.getEnsArretOrdonne().get(15);
+		Lieu arretDestination = ligne.getEnsArretOrdonne().get(38);
 
-		Lieu arretDepart = new Lieu( "LE HAVRE/Gare Routière" );
-		Lieu arretPassage = new Lieu( "TANCARVILLE BAS/Écluse/École Pican/Petit Pont" );
-		Lieu arretDestination = new Lieu( "LILLEBONNE/Théatre Romain - Place F.Faure" );
+		RechercheTrajet recherche = new RechercheTrajet( arretDepart, arretDestination );
+		recherche.setJour( Jour.LUNDI );
+		recherche.setPeriode( Periode.TA );
+		recherche.addArretPassage( ligne.getEnsArretOrdonne().get( 19 ) );
+		recherche.filtrer(ligne);
 
-		FiltrageTrajets filtrage = new FiltrageTrajets();
-
-		filtrage.addFiltre( new FiltreArretsOrdonnes( arretDepart, arretDestination ) );
-		filtrage.addFiltre( new FiltreTrajetPasseParArret( arretDepart ) );
-		//filtrage.addFiltre( new FiltreTrajetPasseParArret( arretPassage ) );
-		filtrage.addFiltre( new FiltreTrajetPasseParArret( arretDestination ) );
-		filtrage.addFiltre( new FiltreTrajetPendantPeriode( Periode.PS ) );
-		filtrage.addFiltre( new FiltreTrajetJour( Jour.SAMEDI) );
-		filtrage.addFiltre( new FiltreArretPendantIntervalle(arretDestination, new IntervalleHeure( new Heure("15:00"), new Heure("18:00") ) ) );
-		filtrage.addFiltre( new FiltreArretPendantIntervalle(arretDepart, new IntervalleHeure( new Heure("15:00"), new Heure("18:00") ) ) );
-
-		filtrage.filtrer( ligneTransport );
-
-		System.out.println( ligneTransport );
+		Map<Lieu, List<Heure>> mapHeuresArrets = UtilitaireRechercheTrajet.getEnsembleHeuresParArrets( ligne, recherche );
+		
+		System.out.println( UtilitaireRechercheTrajet.periodeEtJourToString( recherche ) );
+		System.out.println( UtilitaireRechercheTrajet.heuresParArretsToString( mapHeuresArrets ) );
 	 */
 }
