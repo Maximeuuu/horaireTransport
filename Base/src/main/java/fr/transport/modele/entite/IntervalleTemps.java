@@ -2,6 +2,7 @@ package fr.transport.modele.entite;
 
 import java.io.Serializable;
 
+@Deprecated
 public class IntervalleTemps implements IIntervalle, Serializable
 {
 	public Heure debut;
