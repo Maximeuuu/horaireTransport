@@ -24,7 +24,7 @@ public class FiltrageTrajets implements IFiltre
 		this.filtres.clear();
 	}
 
-	public void filtrer( LigneTransport ligneTransport ) //TODO: créer une copie avant ?
+	public void filtrer( LigneTransport ligneTransport )
 	{
 		for( IFiltre filtre : this.filtres )
 		{

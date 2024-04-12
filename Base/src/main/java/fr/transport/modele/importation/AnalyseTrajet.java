@@ -51,9 +51,6 @@ class AnalyseTrajet
 			Periode periode = Periode.getPeriode( codePeriode );
 			trajet.addPeriode( periode );
 		}
-
-		if( !trajet.pendantPeriode( Periode.TA) )
-			trajet.addPeriode( Periode.TA );
 	}
 
 	private void ajouterHeures( Trajet trajet, int colonne )

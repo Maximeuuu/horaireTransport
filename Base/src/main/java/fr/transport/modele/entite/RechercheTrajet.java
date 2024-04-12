@@ -99,10 +99,14 @@ public class RechercheTrajet implements Serializable
 		this.jour = null;
 	}
 
-	public void filtrer( LigneTransport ligneTransport )
+	public LigneTransport filtrer( LigneTransport ligneTransport )
 	{
+		LigneTransport copieLigneTransport = ligneTransport.clone();
+		
 		this.initialiserFiltre();
-		this.filtre.filtrer( ligneTransport );
+		this.filtre.filtrer( copieLigneTransport );
+
+		return copieLigneTransport;
 	}
 
 	private void initialiserFiltre()
