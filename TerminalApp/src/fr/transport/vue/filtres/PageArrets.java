@@ -1,6 +1,7 @@
 package fr.transport.vue.filtres;
 
 import fr.transport.Controleur;
+import fr.transport.vue.OutilsSaisie;
 
 public class PageArrets
 {
@@ -11,7 +12,7 @@ public class PageArrets
 		this.ctrl = ctrl;
 
 		System.out.println( this.afficherChoix() );
-		int choix = this.ctrl.demanderChoix();
+		int choix = OutilsSaisie.saisirEntier( "Choix : " );
 		this.traiter( choix );
 	}
 	
@@ -27,26 +28,23 @@ public class PageArrets
 
 	private void traiter( int choix )
 	{
+		int indiceArret = -1;
+		if( choix == 1 || choix == 2 || choix == 3 )
+			indiceArret = OutilsSaisie.saisirEntier( "Numéro de l'arret : " ) - 1;
+
 		switch( choix )
 		{
 			case 1:
-				this.ctrl.filtrer( "arret", "depart" );
+				this.ctrl.setArretDepart( indiceArret );
 				break;
 			case 2:
-				this.ctrl.filtrer( "arret", "passage" );
+				this.ctrl.addArretPassage( indiceArret );
 				break;
 			case 3:
-				this.ctrl.filtrer( "arret", "arrivee" );
+				this.ctrl.setArretDestination( indiceArret );
 				break;
 			case 4:
 				break;
 		}
-	}
-
-	private void gererArret()
-	{
-		System.out.print( "Numéro de l'arret : " );
-		int choix = this.ctrl.demanderChoix();
-		this.ctrl.filtrer( "arret", choix );
 	}
 }

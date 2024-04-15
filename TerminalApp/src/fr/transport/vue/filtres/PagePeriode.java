@@ -2,6 +2,7 @@ package fr.transport.vue.filtres;
 
 import fr.transport.Controleur;
 import fr.transport.modele.entite.Periode;
+import fr.transport.vue.OutilsSaisie;
 
 public class PagePeriode
 {
@@ -12,8 +13,8 @@ public class PagePeriode
 		this.ctrl = ctrl;
 
 		System.out.println( this.afficherChoix() );
-		String choix = this.ctrl.demanderChoixChaine();
-		this.traiter( choix );
+		String choix = OutilsSaisie.saisirChaine( "Choix : " );
+		this.ctrl.setPeriode( choix );
 	}
 
 	private String afficherChoix()
@@ -24,11 +25,5 @@ public class PagePeriode
 			sb.append( periode.getCode() + " - " + periode.getNom() + "\n" );
 		}
 		return sb.toString();
-	}
-
-	private void traiter( String choix )
-	{
-		Periode periode = Periode.getPeriode( choix );
-		this.ctrl.filtrer( "periode", periode );
 	}
 }

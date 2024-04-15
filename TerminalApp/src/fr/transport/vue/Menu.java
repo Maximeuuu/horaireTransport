@@ -11,7 +11,7 @@ public class Menu
 		this.ctrl = ctrl;
 
 		System.out.println( this.afficherMenu() );
-		int choix = this.ctrl.demanderChoix();
+		int choix = OutilsSaisie.saisirEntier( "Choix : " );
 		this.rediriger( choix );
 	}
 
@@ -38,7 +38,8 @@ public class Menu
 				new Menu( this.ctrl );
 				break;
 			case 3:
-			//TODO: reinitialiser les filtres
+				this.ctrl.reinitialiserFiltres();
+				new Menu( this.ctrl );
 				break;
 			case 4:
 				break;

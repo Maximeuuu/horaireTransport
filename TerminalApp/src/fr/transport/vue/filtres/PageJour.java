@@ -2,6 +2,7 @@ package fr.transport.vue.filtres;
 
 import fr.transport.Controleur;
 import fr.transport.modele.entite.Jour;
+import fr.transport.vue.OutilsSaisie;
 
 public class PageJour
 {
@@ -12,8 +13,8 @@ public class PageJour
 		this.ctrl = ctrl;
 
 		System.out.println( this.afficherChoix() );
-		int choix = this.ctrl.demanderChoix();
-		this.traiter( choix );
+		int choix = OutilsSaisie.saisirEntier( "Choix : " );
+		this.ctrl.setJour( choix );
 	}
 
 	private String afficherChoix()
@@ -24,11 +25,5 @@ public class PageJour
 			sb.append( jour.getIndice() + " - " + jour.getNom() + "\n" );
 		}
 		return sb.toString();
-	}
-
-	private void traiter( int choix )
-	{
-		Jour jour = Jour.getJour( choix );
-		this.ctrl.filtrer( "jour", jour );
 	}
 }

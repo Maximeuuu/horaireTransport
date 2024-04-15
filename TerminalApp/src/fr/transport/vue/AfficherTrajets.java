@@ -9,7 +9,6 @@ public class AfficherTrajets
 	public AfficherTrajets( Controleur ctrl )
 	{
 		this.ctrl = ctrl;
-		this.ctrl.appliquerFiltres();
-		System.out.println( this.ctrl.getLigneTransport() );
+		System.out.println( this.ctrl.rechercheToString() );
 	}
 }

@@ -5,7 +5,6 @@ import fr.transport.modele.entite.*;
 import fr.transport.modele.filtrage.*;
 import fr.transport.modele.importation.LectureCSV;
 
-import java.io.Console;
 import java.io.File;
 
 public class Terminal
@@ -18,33 +17,18 @@ public class Terminal
 
 		System.out.println("=== Bienvenue dans le terminal de l'application de transport ===\n");
 
+
 		System.out.println( "Choisir un fichier :" );
 		File[] fichiers = ctrl.getFichiersData();
 		System.out.println( afficherFichiers( fichiers ) );
-		int choix = this.ctrl.demanderChoix();
+		int choix = OutilsSaisie.saisirEntier( "Choix : " );
+		this.ctrl.ouvrirFichier( fichiers[choix-1] );
 
-		LectureCSV lecture = new LectureCSV( fichiers[choix-1] );
-		LigneTransport ligneTransport = lecture.getLigneTransport();
 
-		int cpt = 1;
-		for( Lieu arret : ligneTransport.getEnsArretOrdonne() )
-		{
-			System.out.println( cpt + " - " + arret );
-			cpt++;
-		}
-
-		System.out.print( "Choisir un arret de depart : " );
-		int choixArretDepart = this.ctrl.demanderChoix();
-		Lieu arretDepart = ligneTransport.getEnsArretOrdonne().get( choixArretDepart-1 );
-
-		System.out.print( "Choisir un arret de destination : " );
-		int choixArretDestination = this.ctrl.demanderChoix();
-		Lieu arretDestination = ligneTransport.getEnsArretOrdonne().get( choixArretDestination-1 );
-
-		FiltrageTrajets filtrage = new FiltrageTrajets();
-		filtrage.addFiltre( new FiltreArretsOrdonnes( arretDepart, arretDestination ) );
-		filtrage.addFiltre( new FiltreTrajetPasseParArret( arretDepart ) );
-		filtrage.addFiltre( new FiltreTrajetPasseParArret( arretDestination ) );
+		System.out.println( this.ctrl.arretsToString() );
+		int choixArretDepart = OutilsSaisie.saisirEntier( "Choisir un arret de depart : " );
+		int choixArretDestination = OutilsSaisie.saisirEntier( "Choisir un arret de destination : " );
+		this.ctrl.setArrets( choixArretDepart-1, choixArretDestination-1 );
 
 		new Menu( this.ctrl );
 	}

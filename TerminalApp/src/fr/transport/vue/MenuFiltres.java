@@ -12,7 +12,7 @@ public class MenuFiltres
 		this.ctrl = ctrl;
 
 		System.out.println( this.afficherMenu() );
-		int choix = this.ctrl.demanderChoix();
+		int choix = OutilsSaisie.saisirEntier( "Choix : " );
 		this.rediriger( choix );
 	}
 
@@ -43,10 +43,10 @@ public class MenuFiltres
 				new PageArrets( this.ctrl );
 				new MenuFiltres( this.ctrl );
 				break;
-			case 4:
+			/*case 4:
 				new PageIntervalle( this.ctrl );
 				new MenuFiltres( this.ctrl );
-				break;
+				break;*/
 			case 5:
 				break;
 		}

@@ -8,6 +8,10 @@ import java.io.File;
 public class Controleur
 {
 	private static final String REPERTOIRE = "data";
+
+	private Terminal vue;
+	private Metier metier;
+
 	public static void main( String[] args )
 	{
 		new Controleur();
@@ -15,62 +19,70 @@ public class Controleur
 
 	public Controleur()
 	{
-		new Terminal( this );
+		this.metier = new Metier();
+		this.vue = new Terminal( this );
 	}
 
-	public File[] getFichiersData()
+	public File[] getFichiersData() //FIXME: remplacer toutes les utilisations de File par InputStream (aussi dans projet : Base)
 	{
 		File dir = new File( REPERTOIRE );
 		return dir.listFiles();
 	}
 
-	public int demanderChoix()
+	public String arretsToString()
 	{
-		return Integer.parseInt( System.console().readLine() );
+		StringBuilder sb = new StringBuilder();
+		int cpt = 1;
+		for( Lieu arret : this.metier.getLigneTransport().getEnsArretOrdonne() )
+		{
+			sb.append( cpt + " - " + arret + "\n" );
+			cpt++;
+		}
+		return sb.toString();
 	}
 
-	public String demanderChoixChaine()
+	public void ouvrirFichier( File fichier )
 	{
-		return System.console().readLine();
+		this.metier.ouvrirFichier( fichier );
 	}
 
-	public void appliquerFiltres()
+	public void setArrets( int choixArretDepart, int choixArretDestination )
 	{
-		// TODO
+		this.metier.setArrets( choixArretDepart, choixArretDestination );
 	}
 
-	public LigneTransport getLigneTransport()
+	public String rechercheToString()
 	{
-		// TODO
-		return null;
+		return this.metier.rechercheToString();
 	}
 
-	public void filtrer( String nomFiltre, Object... valeurs )
+	public void setPeriode( String codePeriode )
 	{
-		// TODO
+		this.metier.setPeriode( codePeriode );
 	}
 
-	/*
-	 * String fileName = "data/ligne20_le-havre_caudebec-en-caux.csv";
+	public void setJour( int codeJour )
+	{
+		this.metier.setJour( codeJour );
+	}
 
-		File fichier = new File( fileName );
+	public void addArretPassage( int choixArret )
+	{
+		this.metier.addArretPassage( choixArret );
+	}
 
-		LectureCSV lecture = new LectureCSV( fichier );
-		
-		LigneTransport ligne = lecture.getLigneTransport();
+	public void setArretDepart( int indiceArret )
+	{
+		this.metier.setArretDepart( indiceArret );
+	}
 
-		Lieu arretDepart = ligne.getEnsArretOrdonne().get(15);
-		Lieu arretDestination = ligne.getEnsArretOrdonne().get(38);
+	public void setArretDestination( int indiceArret )
+	{
+		this.metier.setArretDestination( indiceArret );
+	}
 
-		RechercheTrajet recherche = new RechercheTrajet( arretDepart, arretDestination );
-		recherche.setJour( Jour.LUNDI );
-		recherche.setPeriode( Periode.TA );
-		recherche.addArretPassage( ligne.getEnsArretOrdonne().get( 19 ) );
-		recherche.filtrer(ligne);
-
-		Map<Lieu, List<Heure>> mapHeuresArrets = UtilitaireRechercheTrajet.getEnsembleHeuresParArrets( ligne, recherche );
-		
-		System.out.println( UtilitaireRechercheTrajet.periodeEtJourToString( recherche ) );
-		System.out.println( UtilitaireRechercheTrajet.heuresParArretsToString( mapHeuresArrets ) );
-	 */
+	public void reinitialiserFiltres()
+	{
+		this.metier.reinitialiserFiltres();
+	}
 }
