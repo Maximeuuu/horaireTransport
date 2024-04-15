@@ -27,6 +27,22 @@ public class LigneTransport implements Serializable, Cloneable
 		this.ligneInverse = null;
 	}
 
+	public LigneTransport( LigneTransport ligneTransport )
+	{
+		this.identifiant = ligneTransport.getIdentifiant();
+		this.nom = ligneTransport.getNom();
+
+		this.ensArretOrdonne = new ArrayList<Lieu>();
+		for( Lieu arret : ligneTransport.getEnsArretOrdonne() )
+			this.ensArretOrdonne.add( arret.clone() );
+
+		this.ensTrajet = new ArrayList<Trajet>();
+		for( Trajet trajet : ligneTransport.getEnsTrajet() )
+			this.ensTrajet.add( trajet.clone() );
+
+		this.ligneInverse = ligneTransport.getLigneInverse();
+	}
+
 	/* ACCESSEURS */
 
 	public String getIdentifiant()
@@ -93,16 +109,6 @@ public class LigneTransport implements Serializable, Cloneable
 	@Override
 	public LigneTransport clone()
 	{
-		LigneTransport clone = new LigneTransport( this.identifiant, this.nom );
-
-		for( Lieu arret : ensArretOrdonne )
-			clone.addArret( arret.clone() );
-
-		for( Trajet trajet : ensTrajet )
-			clone.addTrajet( trajet.clone() );
-
-		clone.setLigneInverse( this.ligneInverse );
-
-		return clone;
+		return new LigneTransport( this );
 	}
 }
