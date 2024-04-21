@@ -34,6 +34,30 @@ public class UtilitaireRechercheTrajet
 		return mapHeuresArrets;
 	}
 
+	public static List<Heure[]> getHorairesTrajets( LigneTransport ligneTransport, RechercheTrajet rechercheTrajet )
+	{
+		List<Heure[]> ensHoraireTrajet = new ArrayList<Heure[]>();
+
+		List<Lieu> ensArretAAfficher = new ArrayList<Lieu>();
+		ensArretAAfficher.add( rechercheTrajet.getArretDepart() );
+		ensArretAAfficher.addAll( rechercheTrajet.getEnsArretPassage() );
+		ensArretAAfficher.add( rechercheTrajet.getArretDestination() );
+
+		for( Trajet trajet : ligneTransport.getEnsTrajet() )
+		{
+			Heure[] tabHeure = new Heure[ensArretAAfficher.size()];
+			for( int cptHeure = 0; cptHeure < ensArretAAfficher.size(); cptHeure++ )
+			{
+				Lieu arret = ensArretAAfficher.get( cptHeure );
+				Heure heure = trajet.getHeureArret( arret );
+				tabHeure[cptHeure] = heure;
+			}
+			ensHoraireTrajet.add( tabHeure );
+		}
+
+		return ensHoraireTrajet;
+	}
+
 	public static String heuresParArretsToString( Map<Lieu, List<Heure>> mapHeuresArrets )
 	{
 		StringBuilder sb = new StringBuilder();
