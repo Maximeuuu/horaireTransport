@@ -37,9 +37,7 @@ public class FiltreActivity extends AppCompatActivity implements View.OnClickLis
 		setContentView(R.layout.activity_filtre);
 
 		Intent intent = getIntent();
-		this.ctrl = (Controleur) intent.getSerializableExtra("controleur");
-
-		//Log.d( "LectureFichierCSV", this.ctrl.getLigneTransport().toString() );
+		this.ctrl = (Controleur) intent.getSerializableExtra(Controleur.class.getName());
 
 		this.lstDepart = findViewById( R.id.spinnerDepart );
 		this.lstArrivee = findViewById( R.id.spinnerArrivee );
@@ -49,6 +47,7 @@ public class FiltreActivity extends AppCompatActivity implements View.OnClickLis
 
 		remplirListe( this.ctrl.getEnsArret(), this.lstDepart );
 		remplirListe( this.ctrl.getEnsArret(), this.lstArrivee );
+		this.lstArrivee.setSelection( this.lstArrivee.getLastVisiblePosition() ); //TODO: ne marche pas
 		remplirListe( this.ctrl.getEnsPeriode(), this.lstPeriode );
 		remplirListe( this.ctrl.getEnsJour(), this.lstJour );
 
@@ -65,40 +64,24 @@ public class FiltreActivity extends AppCompatActivity implements View.OnClickLis
 	public void ouvrirTrajetsActivity()
 	{
 		Intent intent = new Intent(this, TrajetsActivity.class );
-		intent.putExtra("controleur", this.ctrl );
+		intent.putExtra(Controleur.class.getName(), this.ctrl );
 		startActivity( intent );
 	}
 
 	public void onClick( View v )
 	{
-		String depart = (String)this.lstDepart.getSelectedItem();
-		this.ctrl.lieuDepart = new Lieu( depart );
+		int indArretDepart = this.lstDepart.getSelectedItemPosition();
+		int indArretArrivee = this.lstArrivee.getSelectedItemPosition();
 
-		String arrivee = (String)this.lstArrivee.getSelectedItem();
-		this.ctrl.lieuArrivee = new Lieu( arrivee );
+		this.ctrl.setArrets( indArretDepart, indArretArrivee );
 
 		String nomPeriode = (String)this.lstPeriode.getSelectedItem();
-		Periode periode = null;
-		for( Periode p : Periode.values() )
-		{
-			if( p.getNom().equals( nomPeriode ) )
-			{
-				periode = p;
-			}
-		}
+		Log.d("filtre", nomPeriode);
+		this.ctrl.setPeriode( nomPeriode );
 
 		String nomJour = (String)this.lstJour.getSelectedItem();
-		Jour jour = null;
-		for( Jour j : Jour.values() )
-		{
-			if( j.getNom().equals( nomJour ) )
-			{
-				jour = j;
-			}
-		}
-
-		this.ctrl.filtrer( this.ctrl.lieuDepart, this.ctrl.lieuArrivee, periode, jour );
-		//Log.d( "filtres", depart + " - " + arrivee + " - " + periode + " - " + jour );
+		Log.d("filtre", nomJour);
+		this.ctrl.setJour( nomJour );
 
 		this.ouvrirTrajetsActivity();
 	}

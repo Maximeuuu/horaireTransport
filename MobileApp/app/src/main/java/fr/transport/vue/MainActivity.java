@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void ouvrirFiltreActivity()
     {
         Intent intent = new Intent(this, FiltreActivity.class );
-        intent.putExtra("controleur", this.ctrl );
+        intent.putExtra(Controleur.class.getName(), this.ctrl );
         startActivity( intent );
     }
 
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Spinner lstFichiers = findViewById(R.id.spinner_files);
         String itemFichier = (String)lstFichiers.getSelectedItem();
 
-        this.ctrl.setLigneTransport( FileToLigneTransport.LireFichierAndroid(this, itemFichier) );
+        this.ctrl.setLigneTransport( this, itemFichier );
 
         this.ouvrirFiltreActivity();
     }

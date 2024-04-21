@@ -10,17 +10,26 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Map;
 
 import fr.transport.Controleur;
 import fr.transport.mobileapp.R;
 import fr.transport.modele.entite.Heure;
 import fr.transport.modele.entite.Lieu;
 import fr.transport.modele.entite.LigneTransport;
+import fr.transport.modele.entite.RechercheTrajet;
 import fr.transport.modele.entite.Trajet;
+import fr.transport.modele.outils.UtilitaireTableau;
 
 public class TrajetsActivity extends AppCompatActivity
 {
 	private Controleur ctrl;
+
+	private TableLayout tableHoraires;
+	private TextView lblDepart;
+	private TextView lblArrivee;
+	private TextView lblJour;
+	private TextView lblPeriode;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -29,70 +38,107 @@ public class TrajetsActivity extends AppCompatActivity
 		setContentView(R.layout.activity_trajets);
 
 		Intent intent = getIntent();
-		this.ctrl = (Controleur) intent.getSerializableExtra("controleur");
+		this.ctrl = (Controleur) intent.getSerializableExtra(Controleur.class.getName());
 
-		Log.println(Log.DEBUG, "TrajetActivity", "Génération de la page");
+		this.tableHoraires = findViewById( R.id.tblHoraires );
+		this.lblDepart = findViewById( R.id.lblDepart );
+		this.lblArrivee = findViewById( R.id.lblArrivee );
+		this.lblJour = findViewById( R.id.lblJour );
+		this.lblPeriode = findViewById( R.id.lblPeriode );
 
+		this.afficherInfosRecherche();
 		this.afficherTableau();
-
-		Log.println(Log.DEBUG, "TrajetActivity", "Fin de la page");
 	}
 
-	/*private void afficherTableau( )
+	public void afficherInfosRecherche()
 	{
-		List<String> ensArret = this.ctrl.getEnsArret();
+		RechercheTrajet recherche = this.ctrl.getRechercheTrajet();
 
-		TableLayout tableLayout = findViewById( R.id.tableLayoutTrajets );
+		this.lblDepart.setText( recherche.getArretDepart().getNom() );
+		this.lblArrivee.setText( recherche.getArretDestination().getNom() );
+		this.lblJour.setText( recherche.getJour().getNom() );
+		this.lblPeriode.setText( recherche.getPeriode().getNom() );
+	}
 
-		TableRow tableRow = new TableRow( this );
-		for( String arret : ensArret )
+	public void afficherTableau()
+	{
+		this.tableHoraires.removeAllViews();
+
+		TableRow tableRow;
+		tableRow = this.creerEntete( this.ctrl.getNbArretsPassage() );
+		this.tableHoraires.addView( tableRow );
+
+		Log.d( "TrajetsActivity", "filtrer");
+		List<Heure[]> ensHoraireTrajet = this.ctrl.filtrerEnListe();
+		Log.d( "TrajetsActivity", ensHoraireTrajet.size()+"");
+		for( Heure[] ensHeure : ensHoraireTrajet )
 		{
-			TextView textView = new TextView( this );
-			textView.setText( arret );
-			textView.setPadding( 10, 10, 10, 10 );
-			tableRow.addView( textView ); // Ajout de la cellule à la ligne
+			tableRow = this.creerLigneHeures( ensHeure );
+			this.tableHoraires.addView( tableRow );
+			Log.d( "TrajetsActivity", ensHeure.length+"");
 		}
-		tableLayout.addView( tableRow ); // Ajout de la ligne au tableau
-
-		List<Trajet> ensTrajet = this.ctrl.getLigneTransport().getEnsTrajet();
-		List<Lieu> ensLieu = this.ctrl.getLigneTransport().getEnsArretOrdonne();
-		ensTrajet.get(0).getHeureArret( ensLieu.get(0) ); //premiere colone
-		ensTrajet.get(0).getHeureArret( ensLieu.get(1) ); //deuxiem colonne
-
-		...
-	}*/
-
-	private void afficherTableau()
-	{
-		Log.d( "tableauTrajet", this.ctrl.getLigneTransport().toString() );
-		/*List<String> ensArret = this.ctrl.getEnsArret();
-		List<Trajet> ensTrajet = this.ctrl.getLigneTransport().getEnsTrajet();
-		List<Lieu> ensLieu = this.ctrl.getLigneTransport().getEnsArretOrdonne();
-
-		TableLayout tableLayout = findViewById(R.id.tableLayoutTrajets);
-
-		// Ajout des en-têtes de colonnes (arrêts)
-		TableRow headerRow = new TableRow(this);
-		for (String arret : ensArret) {
-			TextView textView = new TextView(this);
-			textView.setText(arret);
-			textView.setPadding(10, 10, 10, 10);
-			headerRow.addView(textView); // Ajout de la cellule à la ligne
-		}
-		tableLayout.addView(headerRow); // Ajout de la ligne d'en-têtes au tableau
-
-		// Ajout des données de trajet pour chaque trajet
-		for (Trajet trajet : ensTrajet) {
-			TableRow dataRow = new TableRow(this);
-			for (Lieu lieu : ensLieu) {
-				Heure heureArret = trajet.getHeureArret(lieu); // Obtention de l'heure d'arrêt pour le lieu donné
-				TextView textView = new TextView(this);
-				textView.setText(heureArret.toString());
-				textView.setPadding(10, 10, 10, 10);
-				dataRow.addView(textView); // Ajout de la cellule à la ligne
-			}
-			tableLayout.addView(dataRow); // Ajout de la ligne de données au tableau
-		}*/
 	}
 
+	private TableRow creerEntete( int nbArrets )
+	{
+		TableRow tableRow = new TableRow( this );
+
+		TextView lblTitre = this.creerColonneEntete( "Départ");
+		tableRow.addView( lblTitre );
+
+		int nbArretsPassage =  nbArrets - 2;
+		for( int cptArrets=0; cptArrets < nbArretsPassage; cptArrets++ )
+		{
+			lblTitre = this.creerColonneEntete( "Passage " + cptArrets + 1);
+			tableRow.addView( lblTitre );
+		}
+
+		lblTitre = this.creerColonneEntete( "Arrivée" );
+		tableRow.addView( lblTitre );
+
+		return tableRow;
+	}
+
+	private TextView creerColonneEntete( String nom )
+	{
+		TextView lblTitre = this.creerCellule( nom );
+		return lblTitre;
+	}
+
+	private TableRow creerLigneHeures( Heure[] ensHeure )
+	{
+		TableRow tableRow = new TableRow( this );
+
+		for( Heure heure : ensHeure )
+		{
+			TextView lblHeure = this.creerCelluleHeure( heure.toString() );
+			tableRow.addView( lblHeure );
+		}
+
+		return tableRow;
+	}
+
+	private TextView creerCelluleHeure( String nom )
+	{
+		TextView lblTitre = this.creerCellule( nom );
+		return lblTitre;
+	}
+
+	private TextView creerCellule( String nom )
+	{
+		TextView lblTitre;
+		lblTitre = new TextView( this );
+		lblTitre.setText( nom );
+
+		TrajetsActivity.ajouterMarges( lblTitre );
+
+		return lblTitre;
+	}
+
+	private static void ajouterMarges( TextView lbl )
+	{
+		TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+		layoutParams.setMargins(10, 10, 10, 10);
+		lbl.setLayoutParams(layoutParams);
+	}
 }

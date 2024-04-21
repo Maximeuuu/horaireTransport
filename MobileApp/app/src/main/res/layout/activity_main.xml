@@ -6,37 +6,50 @@
     android:layout_height="match_parent"
     tools:context="fr.transport.vue.MainActivity">
 
-    <Spinner
-        android:id="@+id/spinner_files"
-        android:layout_width="374dp"
-        android:layout_height="52dp"
-        android:entries="@array/spinner_item_files"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.24" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/button_open_file"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/open_file"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_files"
-        app:layout_constraintVertical_bias="0.537" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="104dp"
-        android:text="@string/file_choice"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="145dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/banniere" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="104dp"
+            android:text="@string/file_choice" />
+
+        <Spinner
+            android:id="@+id/spinner_files"
+            android:layout_width="374dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center"
+            android:entries="@array/spinner_item_files" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="60dp" />
+
+        <Button
+            android:id="@+id/button_open_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/open_file" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
