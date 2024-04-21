@@ -92,6 +92,11 @@ public class RechercheTrajet implements Serializable
 
 	/* METHODES */
 
+	public int getNbArretsPassage()
+	{
+		return this.ensArretPassage.size();
+	}
+
 	public void reinitialiser()
 	{
 		this.ensArretPassage.clear();

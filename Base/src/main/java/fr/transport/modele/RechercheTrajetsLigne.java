@@ -28,4 +28,13 @@ public class RechercheTrajetsLigne extends RechercheTrajet
 
 		return mapHeuresArrets;
 	}
+
+	public List<Heure[]> rechercherHorairesTrajet()
+	{
+		LigneTransport ligneModifiee = this.filtrer( this.ligneTransport );
+
+		List<Heure[]> ensHoraireTrajet = UtilitaireRechercheTrajet.getHorairesTrajets( ligneModifiee, this );
+
+		return ensHoraireTrajet;
+	}
 }
