@@ -24,6 +24,18 @@ public enum Periode
 		return null;
 	}
 
+	public static Periode getPeriodeParNom( String nom )
+	{
+		for( Periode periode : Periode.values() )
+		{
+			if( periode.getNom().equals( nom ) )
+			{
+				return periode;
+			}
+		}
+		return null;
+	}
+
 	/* CONSTRUCTEUR */
 
 	private Periode( String code, String nom )

@@ -49,7 +49,31 @@ public class Trajet implements Serializable, Cloneable
 
 	public boolean pendantJour( Jour jour )
 	{
+		if( jour.equals( Jour.SEMAINE ) )
+			return pendantSemaine( jour );
+		
+		if( jour.equals( Jour.WEEKEND ) )
+			return pendantWeekend( jour );
+
 		return ensJour.contains( jour );
+	}
+
+	private boolean pendantSemaine( Jour jour )
+	{
+		for( Jour j : Jour.getJoursSemaine( ) )
+			if( !ensJour.contains( j ) )
+				return false;
+
+		return true;
+	}
+
+	private boolean pendantWeekend( Jour jour )
+	{
+		for( Jour j : Jour.getJoursWeekend( ) )
+			if( !ensJour.contains( j ) )
+				return false;
+
+		return true;
 	}
 
 	public boolean pendantPeriode( Periode periode )
