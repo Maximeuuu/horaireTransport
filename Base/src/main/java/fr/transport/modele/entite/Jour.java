@@ -1,8 +1,12 @@
 package fr.transport.modele.entite;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum Jour
 {
-	GENERAL		( 9, "Jour" ),
+	SEMAINE		( 9, "Semaine" ),
+	WEEKEND		( 10,"Week-end" ),
 	LUNDI		( 1, "Lundi" ),
 	MARDI		( 2, "Mardi" ),
 	MERCREDI	( 3, "Mercredi" ),
@@ -22,6 +26,18 @@ public enum Jour
 		for( Jour jour : Jour.values() )
 		{
 			if( jour.getIndice() == indice )
+			{
+				return jour;
+			}
+		}
+		return null;
+	}
+
+	public static Jour getJour( String nom )
+	{
+		for( Jour jour : Jour.values() )
+		{
+			if( jour.getNom().equals( nom ) )
 			{
 				return jour;
 			}
@@ -50,6 +66,25 @@ public enum Jour
 	}
 
 	/* METHODE */
+
+	public static List<Jour> getJoursSemaine()
+	{
+		List<Jour> jours = new ArrayList<Jour>();
+		jours.add( LUNDI );
+		jours.add( MARDI );
+		jours.add( MERCREDI );
+		jours.add( JEUDI );
+		jours.add( VENDREDI );
+		return jours;
+	}
+
+	public static List<Jour> getJoursWeekend()
+	{
+		List<Jour> jours = new ArrayList<Jour>();
+		jours.add( SAMEDI );
+		jours.add( DIMANCHE );
+		return jours;
+	}
 
 	@Override
 	public String toString()
