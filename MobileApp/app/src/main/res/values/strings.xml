@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MobileApp</string>
     <string name="test">test</string>
-    <string name="title_activity_main">HorairesTransport</string>
+    <string name="title_activity_main">Horaires Transport</string>
     <string name="file_choice">Choisir le fichier</string>
     <string name="open_file">Ouvrir le fichier</string>
 
