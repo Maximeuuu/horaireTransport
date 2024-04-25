@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ public class TrajetsActivity extends AppCompatActivity
 
 	private TableLayout tableHoraires;
 	private TextView lblDepart;
+	private TextView lblPassage;
 	private TextView lblArrivee;
 	private TextView lblJour;
 	private TextView lblPeriode;
@@ -42,6 +44,7 @@ public class TrajetsActivity extends AppCompatActivity
 
 		this.tableHoraires = findViewById( R.id.tblHoraires );
 		this.lblDepart = findViewById( R.id.lblDepart );
+		this.lblPassage = findViewById( R.id.lblPassage );
 		this.lblArrivee = findViewById( R.id.lblArrivee );
 		this.lblJour = findViewById( R.id.lblJour );
 		this.lblPeriode = findViewById( R.id.lblPeriode );
@@ -53,6 +56,18 @@ public class TrajetsActivity extends AppCompatActivity
 	public void afficherInfosRecherche()
 	{
 		RechercheTrajet recherche = this.ctrl.getRechercheTrajet();
+
+		List<Lieu> ensPasssage = recherche.getEnsArretPassage();
+		if( ensPasssage.size() >= 1 )
+		{
+			this.lblPassage.setText( recherche.getEnsArretPassage().get(0).getNom() );
+		}
+		else
+		{
+			this.lblPassage.setText( "" );
+			this.lblPassage.setVisibility( View.INVISIBLE );
+			findViewById( R.id.lblLibPassage ).setVisibility( View.INVISIBLE );
+		}
 
 		this.lblDepart.setText( recherche.getArretDepart().getNom() );
 		this.lblArrivee.setText( recherche.getArretDestination().getNom() );
@@ -86,15 +101,17 @@ public class TrajetsActivity extends AppCompatActivity
 		TextView lblTitre = this.creerColonneEntete( "Départ");
 		tableRow.addView( lblTitre );
 
-		int nbArretsPassage =  nbArrets - 2;
+		int nbArretsPassage =  nbArrets; //- 2
 		for( int cptArrets=0; cptArrets < nbArretsPassage; cptArrets++ )
 		{
-			lblTitre = this.creerColonneEntete( "Passage " + cptArrets + 1);
+			lblTitre = this.creerColonneEntete( "Passage " + (cptArrets + 1));
 			tableRow.addView( lblTitre );
 		}
 
 		lblTitre = this.creerColonneEntete( "Arrivée" );
 		tableRow.addView( lblTitre );
+
+		tableRow.setGravity( View.TEXT_ALIGNMENT_GRAVITY );
 
 		return tableRow;
 	}
@@ -115,6 +132,8 @@ public class TrajetsActivity extends AppCompatActivity
 			tableRow.addView( lblHeure );
 		}
 
+		tableRow.setGravity( View.TEXT_ALIGNMENT_GRAVITY );
+
 		return tableRow;
 	}
 
@@ -129,6 +148,7 @@ public class TrajetsActivity extends AppCompatActivity
 		TextView lblTitre;
 		lblTitre = new TextView( this );
 		lblTitre.setText( nom );
+		lblTitre.setTextAlignment( View.TEXT_ALIGNMENT_CENTER );
 
 		TrajetsActivity.ajouterMarges( lblTitre );
 

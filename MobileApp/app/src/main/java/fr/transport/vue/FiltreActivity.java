@@ -26,9 +26,13 @@ public class FiltreActivity extends AppCompatActivity implements View.OnClickLis
 
 	private Spinner lstDepart;
 	private Spinner lstArrivee;
+	private Spinner lstPassage; //mettre une list par la suite
 	private Spinner lstPeriode;
 	private Spinner lstJour;
+	private Button btnAjouter;
+	private Button btnRetirer;
 	private Button btnValider;
+	private Button btnReset;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -39,19 +43,33 @@ public class FiltreActivity extends AppCompatActivity implements View.OnClickLis
 		Intent intent = getIntent();
 		this.ctrl = (Controleur) intent.getSerializableExtra(Controleur.class.getName());
 
+		this.addComposants();
+		this.retirerPassage();
+		this.reset();
+		this.addListeners();
+	}
+
+	private void addComposants()
+	{
 		this.lstDepart = findViewById( R.id.spinnerDepart );
 		this.lstArrivee = findViewById( R.id.spinnerArrivee );
+		this.lstPassage = findViewById( R.id.spinnerPassage );
+
 		this.lstPeriode = findViewById( R.id.spinnerPeriode );
 		this.lstJour = findViewById( R.id.spinnerJour );
+
+		this.btnRetirer = findViewById( R.id.buttonRmPassage );
+		this.btnAjouter = findViewById( R.id.buttonAddPassage );
 		this.btnValider = findViewById( R.id.buttonValider );
+		this.btnReset = findViewById( R.id.buttonReset );
+	}
 
-		remplirListe( this.ctrl.getEnsArret(), this.lstDepart );
-		remplirListe( this.ctrl.getEnsArret(), this.lstArrivee );
-		this.lstArrivee.setSelection( this.lstArrivee.getLastVisiblePosition() ); //TODO: ne marche pas
-		remplirListe( this.ctrl.getEnsPeriode(), this.lstPeriode );
-		remplirListe( this.ctrl.getEnsJour(), this.lstJour );
-
+	private void addListeners()
+	{
+		this.btnAjouter.setOnClickListener( this );
+		this.btnRetirer.setOnClickListener( this );
 		this.btnValider.setOnClickListener( this );
+		this.btnReset.setOnClickListener( this );
 	}
 
 	private void remplirListe(List<String> ens, Spinner liste )
@@ -70,17 +88,63 @@ public class FiltreActivity extends AppCompatActivity implements View.OnClickLis
 
 	public void onClick( View v )
 	{
+		if( v == btnRetirer )
+			this.retirerPassage();
+
+		if( v == btnAjouter )
+			this.ajouterPassage();
+
+		if( v == btnReset )
+			this.reset();
+
+		if( v == btnValider )
+			this.valider();
+	}
+
+	private void retirerPassage()
+	{
+		this.btnRetirer.setVisibility( View.INVISIBLE );
+		this.btnAjouter.setVisibility( View.VISIBLE );
+
+		this.lstPassage.setVisibility( View.INVISIBLE );
+		this.lstPassage.setEnabled(false);
+	}
+
+	private void ajouterPassage()
+	{
+		this.btnAjouter.setVisibility( View.INVISIBLE );
+		this.btnRetirer.setVisibility( View.VISIBLE );
+
+		this.lstPassage.setVisibility( View.VISIBLE );
+		this.lstPassage.setEnabled(true);
+	}
+
+	private void reset()
+	{
+		remplirListe( this.ctrl.getEnsArret(), this.lstDepart );
+		remplirListe( this.ctrl.getEnsArret(), this.lstArrivee );
+		remplirListe( this.ctrl.getEnsArret(), this.lstPassage );
+
+		//this.lstArrivee.setSelection( this.lstArrivee.getLastVisiblePosition() ); //TODO: ne marche pas
+		remplirListe( this.ctrl.getEnsPeriode(), this.lstPeriode );
+		remplirListe( this.ctrl.getEnsJour(), this.lstJour );
+	}
+
+	private void valider()
+	{
 		int indArretDepart = this.lstDepart.getSelectedItemPosition();
 		int indArretArrivee = this.lstArrivee.getSelectedItemPosition();
+		int indArretPassage = this.lstPassage.getSelectedItemPosition();
 
 		this.ctrl.setArrets( indArretDepart, indArretArrivee );
 
+		if( this.lstPassage.isEnabled() )
+			this.ctrl.addArretPassage( indArretPassage );
+
 		String nomPeriode = (String)this.lstPeriode.getSelectedItem();
-		Log.d("filtre", nomPeriode);
 		this.ctrl.setPeriode( nomPeriode );
 
 		String nomJour = (String)this.lstJour.getSelectedItem();
-		Log.d("filtre", nomJour);
 		this.ctrl.setJour( nomJour );
 
 		this.ouvrirTrajetsActivity();

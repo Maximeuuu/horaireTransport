@@ -11,110 +11,187 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp" />
-
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="145dp"
+            android:layout_marginTop="@dimen/bordure_verticale"
+            android:layout_marginBottom="@dimen/bordure_verticale"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/banniere" />
 
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/bordure_horizontale"
+            android:layout_marginRight="@dimen/bordure_horizontale">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewDepart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/depart"
+                    android:textAlignment="textEnd" />
+
+                <Spinner
+                    android:id="@+id/spinnerDepart"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/hauteur_spinner" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewArrivee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/arrivee"
+                    android:textAlignment="textEnd" />
+
+                <Spinner
+                    android:id="@+id/spinnerArrivee"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/hauteur_spinner" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewPassage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/passage"
+                    android:textAlignment="textEnd" />
+
+                <Spinner
+                    android:id="@+id/spinnerPassage"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/hauteur_spinner" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Space android:layout_width="@dimen/longueur_colonne_lib" />
+
+                <Space
+                    android:layout_width="336dp"
+                    android:layout_height="match_parent" />
+            </TableRow>
+
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonRmPassage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/retirer_passage" />
+
+            <Button
+                android:id="@+id/buttonAddPassage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ajouter_passage" />
+        </LinearLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/bordure_horizontale"
+            android:layout_marginRight="@dimen/bordure_horizontale">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Space
+                    android:layout_width="@dimen/longueur_colonne_lib"
+                    android:layout_height="25dp" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewJour"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/jour"
+                    android:textAlignment="textEnd" />
+
+                <Spinner
+                    android:id="@+id/spinnerJour"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/hauteur_spinner" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textViewPeriode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/periode"
+                    android:textAlignment="textEnd" />
+
+                <Spinner
+                    android:id="@+id/spinnerPeriode"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/hauteur_spinner" />
+
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/bordure_horizontale"
+            android:layout_marginRight="@dimen/bordure_horizontale"
+            android:layout_marginBottom="@dimen/bordure_verticale"
+            android:gravity="bottom|right"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reset" />
+
+            <Button
+                android:id="@+id/buttonValider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/valider" />
+        </LinearLayout>
+
     </LinearLayout>
-
-    <TableLayout
-        android:id="@+id/tableLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textViewDepart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/depart" />
-
-            <Spinner
-                android:id="@+id/spinnerDepart"
-                android:layout_width="312dp"
-                android:layout_height="48dp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textViewArrivee"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/arrivee" />
-
-            <Spinner
-                android:id="@+id/spinnerArrivee"
-                android:layout_width="312dp"
-                android:layout_height="48dp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textViewPeriode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/periode" />
-
-            <Spinner
-                android:id="@+id/spinnerPeriode"
-                android:layout_width="312dp"
-                android:layout_height="48dp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textViewJour"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/jour" />
-
-            <Spinner
-                android:id="@+id/spinnerJour"
-                android:layout_width="312dp"
-                android:layout_height="48dp" />
-
-        </TableRow>
-
-    </TableLayout>
-
-    <Button
-        android:id="@+id/buttonValider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/valider"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
