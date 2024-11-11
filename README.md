@@ -11,7 +11,7 @@ Vous pourrez connaitre les heures disponibles entre deux arrets, il est possible
 
 ## II - Comment utiliser
 
-### 1. Requierements
+### 1. Pré-requis
 
 * java-jdk 17 [installation](...)
 
